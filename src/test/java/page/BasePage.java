@@ -5,7 +5,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import utills.PropertyReader;
 
 
-public class BasePage {
+public class BasePage  {
     public WebDriver driver;
     PropertyReader propertyReader =new PropertyReader();
     public String URL =propertyReader.getProperty("URL");
