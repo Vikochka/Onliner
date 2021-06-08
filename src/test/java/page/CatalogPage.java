@@ -8,8 +8,8 @@ import org.testng.asserts.SoftAssert;
 public class CatalogPage extends BasePage{
     public static final String CATALOG_NAVIGATION = "//span[contains(@class,'catalog-navigation-classifier__item-title-wrapper')][contains(text(),'%s')]";
     public static final String CATALOG_LIST_XPATH = "//div[@data-id='1']//div[contains(@class,'catalog-navigation-list__aside-list')]";
-    public static final String LIST_TITLE_XPATH = "//*[contains(@class,'catalog-navigation-list__aside-title')][contains(text(),'%s')]";
-    public static final String LIST_DROPDOWN_XPATH = "//*[contains(@class,'catalog-navigation-list__dropdown-data')]//*[contains(text(),'%s')]";
+    public static final String LIST_TITLE_XPATH = "//a[@class='catalog-navigation-list__dropdown-item'] //..//..//..//../div[@class='catalog-navigation-list__aside-item']/div[@class='catalog-navigation-list__aside-title'][contains(text(),'%s')]";
+    public static final String LIST_DROPDOWN_XPATH = "//span[contains(@class,'catalog-navigation-list__dropdown-data')]//*[contains(text(),'%s')]";
     public static final String WAIT_FOR_IS_PAGE_OPEN = "//h1[contains(@class,'schema-header__title')][contains(text(),'%s')]";
     SoftAssert softAssert = new SoftAssert();
 
