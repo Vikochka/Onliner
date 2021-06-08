@@ -17,7 +17,7 @@ public class SearchTest extends BaseTest {
     public void searchTVTest(String manufacturer,String priceTo,String diagonalFrom,String diagonalTo,String resolution) {
         SoftAssert softAssert = new SoftAssert();
         mainPage = new MainPage(driver);
-        mainPage.openMainPage();
+        mainPage.navigateMainPage();
         mainPage.navigatePage("Каталог");
         mainPage.isPageOpen("Каталог");
         catalogPage = new CatalogPage(driver);

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
-<suite name="tests" parallel="tests" thread-count="1">
-    <test name="test1">
+<suite name="Onliner" parallel="tests" thread-count="1">
+    <test name="SearchTest">
         <parameter name="manufacturer" value="Samsung"></parameter>
         <parameter name="diagonalFrom" value="40"></parameter>
         <parameter name="diagonalTo" value="50"></parameter>

@@ -14,7 +14,7 @@ public class MainPage extends BasePage {
         super(driver);
     }
 
-    public void openMainPage() {
+    public void navigateMainPage() {
         driver.get(URL);
     }
 
