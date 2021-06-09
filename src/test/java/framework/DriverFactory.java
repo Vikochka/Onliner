@@ -1,13 +1,11 @@
-package Browser;
+package framework;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 
-import java.util.concurrent.TimeUnit;
-
-import static utills.PropertyReader.getProperty;
+import static framework.utils.PropertyReader.getProperty;
 
 public class DriverFactory {
 
@@ -18,19 +16,17 @@ public class DriverFactory {
 
         switch (browser) {
             case "chrome":
-                WebDriverManager.chromedriver().setup();;
+                WebDriverManager.chromedriver().setup();
                 driver = new ChromeDriver();
                 break;
             case "firefox":
-                System.setProperty("webdriver.gecko.driver", "src/test/resources/geckodriver.exe");
+                WebDriverManager.firefoxdriver().setup();
                 driver = new FirefoxDriver();
                 break;
             default:
                 System.out.println("Invalid browser name");
         }
 
-        driver.manage().window().maximize();
-        driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
         return driver;
     }
 }

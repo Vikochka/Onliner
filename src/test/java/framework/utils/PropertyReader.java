@@ -1,4 +1,4 @@
-package utills;
+package framework.utils;
 
 import java.io.IOException;
 import java.io.InputStream;

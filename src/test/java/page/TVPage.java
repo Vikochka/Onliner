@@ -23,25 +23,25 @@ public class TVPage extends BasePage {
 
     SoftAssert softAssert = new SoftAssert();
 
-    public TVPage(WebDriver driver) {
-        super(driver);
+    public TVPage() {
+        super();
     }
 
     public void selectManufacturer(String manufacturer) {
-        WebElement create = driver.findElement(By.xpath(String.format(CHECKBOX_XPATH, manufacturer)));
+        WebElement element = driver.findElement(By.xpath(String.format(CHECKBOX_XPATH, manufacturer)));
         WebDriverWait wait = new WebDriverWait(driver, 20);
-        wait.until(ExpectedConditions.elementToBeClickable(create));
+        wait.until(ExpectedConditions.elementToBeClickable(element));
         Actions actions = new Actions(driver);
-        actions.moveToElement(create).perform();
+        actions.moveToElement(element).perform();
         actions.click().perform();
     }
 
     public void selectResolution(String resolution) {
-        WebElement create = driver.findElement(By.xpath(String.format(CHECKBOX_XPATH, resolution)));
+        WebElement element = driver.findElement(By.xpath(String.format(CHECKBOX_XPATH, resolution)));
         WebDriverWait wait = new WebDriverWait(driver, 20);
-        wait.until(ExpectedConditions.elementToBeClickable(create));
+        wait.until(ExpectedConditions.elementToBeClickable(element));
         Actions actions = new Actions(driver);
-        actions.moveToElement(create).perform();
+        actions.moveToElement(element).perform();
         actions.click().perform();
     }
 

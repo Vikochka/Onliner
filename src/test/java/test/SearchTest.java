@@ -8,24 +8,22 @@ import page.MainPage;
 import page.TVPage;
 
 public class SearchTest extends BaseTest {
-    MainPage mainPage;
-    CatalogPage catalogPage;
-    TVPage tvPage;
+
 
     @Parameters({"manufacturer", "priceTo", "diagonalFrom", "diagonalTo", "resolution"})
     @Test
-    public void searchTVTest(String manufacturer,String priceTo,String diagonalFrom,String diagonalTo,String resolution) {
+    public void searchTVTest(String manufacturer, String priceTo, String diagonalFrom, String diagonalTo, String resolution) {
         SoftAssert softAssert = new SoftAssert();
-        mainPage = new MainPage(driver);
-        mainPage.navigateMainPage();
+
+        MainPage mainPage = new MainPage();
         mainPage.navigatePage("Каталог");
-        mainPage.isPageOpen("Каталог");
-        catalogPage = new CatalogPage(driver);
+
+        CatalogPage catalogPage = new CatalogPage();
         catalogPage.catalogNavigation("Электроника");
         catalogPage.isListOpened();
         catalogPage.listTitle("Телевидение", "Телевизоры");
-        catalogPage.isPageOpened("Телевизоры");
-        tvPage = new TVPage(driver);
+
+        TVPage tvPage = new TVPage();
         tvPage.selectManufacturer(manufacturer);
         tvPage.selectDiagonal(diagonalFrom, diagonalTo);
         tvPage.selectPrice(priceTo);
@@ -34,6 +32,7 @@ public class SearchTest extends BaseTest {
         tvPage.validationDiagonal(40, 50);
         tvPage.validationResolution(resolution);
         tvPage.validationPrice(1000);
+
         softAssert.assertAll();
     }
 }
