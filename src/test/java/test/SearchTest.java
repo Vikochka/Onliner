@@ -30,11 +30,10 @@ public class SearchTest extends BaseTest {
         tvPage.selectDiagonal(diagonalFrom, diagonalTo);
         tvPage.selectPrice(priceTo);
         tvPage.selectResolution(resolution);
-        tvPage.validationManufacturer("Samsung");
+        tvPage.validationManufacturer(manufacturer);
         tvPage.validationDiagonal(40, 50);
-        tvPage.validationResolution("1920x1080 (Full HD)");
+        tvPage.validationResolution(resolution);
         tvPage.validationPrice(1000);
-        softAssert.assertAll();
         softAssert.assertAll();
     }
 }
