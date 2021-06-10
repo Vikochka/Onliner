@@ -1,5 +1,6 @@
 package test;
 
+import framework.BaseTest;
 import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
@@ -16,7 +17,7 @@ public class SearchTest extends BaseTest {
         SoftAssert softAssert = new SoftAssert();
 
         MainPage mainPage = new MainPage();
-        mainPage.navigatePage("Каталог");
+        mainPage.navigateSection("Каталог");
 
         CatalogPage catalogPage = new CatalogPage();
         catalogPage.catalogNavigation("Электроника");
@@ -29,9 +30,9 @@ public class SearchTest extends BaseTest {
         tvPage.selectPrice(priceTo);
         tvPage.selectResolution(resolution);
         tvPage.validationManufacturer(manufacturer);
-        tvPage.validationDiagonal(40, 50);
+        tvPage.validationDiagonal(diagonalFrom, diagonalTo);
         tvPage.validationResolution(resolution);
-        tvPage.validationPrice(1000);
+        tvPage.validationPrice(priceTo);
 
         softAssert.assertAll();
     }

@@ -5,7 +5,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 
-import static framework.utils.PropertyReader.getProperty;
+import static framework.PropertyReader.getProperty;
 
 public class DriverFactory {
 

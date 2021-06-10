@@ -1,8 +1,8 @@
 package page;
 
+import framework.BasePage;
+import framework.Waiters;
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.testng.asserts.SoftAssert;
 
 public class CatalogPage extends BasePage {
@@ -11,11 +11,7 @@ public class CatalogPage extends BasePage {
     public static final String LIST_TITLE_XPATH = "//a[@class='catalog-navigation-list__dropdown-item'] //..//..//..//../div[@class='catalog-navigation-list__aside-item']/div[@class='catalog-navigation-list__aside-title'][contains(text(),'%s')]";
     public static final String LIST_DROPDOWN_XPATH = "//span[contains(@class,'catalog-navigation-list__dropdown-data')]//*[contains(text(),'%s')]";
     public static final String WAIT_FOR_IS_PAGE_OPEN = "//h1[contains(@class,'schema-header__title')][contains(text(),'%s')]";
-
-    public CatalogPage(WebDriver driver) {
-        super(driver);
-    }
-
+    SoftAssert softAssert;
 
     public void catalogNavigation(String catalogNavigation) {
         driver.findElement(By.xpath(String.format(CATALOG_NAVIGATION, catalogNavigation))).click();
@@ -27,9 +23,8 @@ public class CatalogPage extends BasePage {
     }
 
 
-
     public void isListOpened() {
-        waiters.waitForVisibility(CATALOG_LIST_XPATH);
+        Waiters.waitForVisibility(CATALOG_LIST_XPATH);
         softAssert.assertTrue(true);
     }
 

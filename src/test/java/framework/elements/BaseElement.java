@@ -1,14 +1,12 @@
 package framework.elements;
 
-import framework.utils.Waiters;
+import framework.Waiters;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 
 import java.util.List;
-
-import static framework.utils.PropertyReader.getIntProperty;
 
 public abstract class BaseElement {
     protected WebElement element;
@@ -18,20 +16,21 @@ public abstract class BaseElement {
     private Waiters waiters;
 
 
-    public BaseElement(WebDriver driver, By by) { //просто для локаторов
+
+    public BaseElement(WebDriver driver, By by) {
         this.driver = driver;
         this.by = by;
         waiters = new Waiters(driver);
     }
 
-    public BaseElement(WebDriver driver, By by, String name) { //для локаторов с шаблоном
+    public BaseElement(WebDriver driver, By by, String name) {
         this.driver = driver;
         this.by = by;
         this.name = name;
         waiters = new Waiters(driver);
     }
 
-    public BaseElement(WebDriver driver, WebElement element) { //для actions
+    public BaseElement(WebDriver driver, WebElement element) {
         this.element = element;
         this.driver = driver;
         waiters = new Waiters(driver);
@@ -43,7 +42,6 @@ public abstract class BaseElement {
     }
 
     public List<WebElement> getElements() { //for collections
-        //waiters.waitForPageLoad(driver);
         return driver.findElements(by);
     }
 

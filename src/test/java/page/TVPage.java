@@ -1,7 +1,7 @@
 package page;
 
+import framework.BasePage;
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -9,6 +9,8 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.asserts.SoftAssert;
 
 import java.util.List;
+
+import static framework.PropertyReader.getIntProperty;
 
 public class TVPage extends BasePage {
     public static final String CHECKBOX_XPATH = "//ul[@class='schema-filter__list']//label[contains(@class,'schema-filter__checkbox-item')]//span[contains(@class,'schema-filter__checkbox-text')][text()='%s'] ";
@@ -23,13 +25,11 @@ public class TVPage extends BasePage {
 
     SoftAssert softAssert = new SoftAssert();
 
-    public TVPage() {
-        super();
-    }
+
 
     public void selectManufacturer(String manufacturer) {
         WebElement element = driver.findElement(By.xpath(String.format(CHECKBOX_XPATH, manufacturer)));
-        WebDriverWait wait = new WebDriverWait(driver, 20);
+        WebDriverWait wait = new WebDriverWait(driver,getIntProperty("timeoutElement"));
         wait.until(ExpectedConditions.elementToBeClickable(element));
         Actions actions = new Actions(driver);
         actions.moveToElement(element).perform();
@@ -38,7 +38,7 @@ public class TVPage extends BasePage {
 
     public void selectResolution(String resolution) {
         WebElement element = driver.findElement(By.xpath(String.format(CHECKBOX_XPATH, resolution)));
-        WebDriverWait wait = new WebDriverWait(driver, 20);
+        WebDriverWait wait = new WebDriverWait(driver,getIntProperty("timeoutElement"));
         wait.until(ExpectedConditions.elementToBeClickable(element));
         Actions actions = new Actions(driver);
         actions.moveToElement(element).perform();
@@ -76,22 +76,24 @@ public class TVPage extends BasePage {
         }
     }
 
-    public void validationDiagonal(int diagonalFrom, int diagonalTo) {
+    public void validationDiagonal(String diagonalFrom, String diagonalTo) {
         List<WebElement> block = driver.findElements(BLOCK_CSS);
         String value = driver.findElement(DESCRIPTION_CSS).getText();
         for (int i = 1; i <= block.size(); i++) {
             String[] description;
             description = value.split("\"");
+            int intDiagonalFrom = Integer.parseInt(diagonalFrom);
+            int intDiagonalTo = Integer.parseInt(diagonalTo);
             for (int j = 0; j < description.length; j++) {
                 double convert = Double.parseDouble(description[0]);
-                if (convert >= diagonalFrom && convert <= diagonalTo) {
+                if (convert >= intDiagonalFrom && convert <= intDiagonalTo) {
                     softAssert.assertTrue(true);
                 }
             }
         }
     }
 
-    public void validationPrice(int priceTo) {
+    public void validationPrice(String priceTo) {
         List<WebElement> block = driver.findElements(BLOCK_CSS);
         String priceBlock = driver.findElement(By.xpath(CHECK_PRICE_TO_XPATH)).getText();
         for (int i = 1; i <= block.size(); i++) {
@@ -99,7 +101,8 @@ public class TVPage extends BasePage {
             price = priceBlock.split(",");
             for (int j = 0; j < price.length; j++) {
                 double convert = Double.parseDouble(price[0]);
-                if (convert < priceTo) ;
+                int intPriceTo = Integer.parseInt(priceTo);
+                if (convert < intPriceTo) ;
                 softAssert.assertTrue(true);
             }
         }

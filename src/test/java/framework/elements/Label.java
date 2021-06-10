@@ -18,7 +18,7 @@ public class Label extends BaseElement {
         super(driver, element);
     }
 
-    public void getLabel(By by,String label){
+    public void getLabel(){
         getElement();
         click();
     }

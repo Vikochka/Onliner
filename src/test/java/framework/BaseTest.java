@@ -1,4 +1,4 @@
-package test;
+package framework;
 
 import framework.DriverFactory;
 import org.openqa.selenium.WebDriver;
@@ -7,7 +7,8 @@ import org.testng.annotations.BeforeMethod;
 
 import java.util.concurrent.TimeUnit;
 
-import static framework.utils.PropertyReader.getProperty;
+import static framework.PropertyReader.getIntProperty;
+import static framework.PropertyReader.getProperty;
 
 public class BaseTest {
     public WebDriver driver;
@@ -16,7 +17,7 @@ public class BaseTest {
     public void setup() {
        this.driver = new DriverFactory().getDriver();
         driver.manage().window().maximize();
-        driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+        driver.manage().timeouts().implicitlyWait(getIntProperty("timeout"), TimeUnit.SECONDS);
         driver.get(getProperty("URL"));
     }
 
