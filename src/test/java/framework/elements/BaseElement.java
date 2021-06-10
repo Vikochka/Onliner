@@ -1,63 +1,88 @@
 package framework.elements;
 
-import framework.Waiters;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
+import org.testng.Assert;
 
 import java.util.List;
+
+import static framework.PropertyReader.getIntProperty;
 
 public abstract class BaseElement {
     protected WebElement element;
     protected WebDriver driver;
     private By by;
     private String name;
-    private Waiters waiters;
+    private WebDriverWait wait;
 
-
-
-    public BaseElement(WebDriver driver, By by) {
-        this.driver = driver;
+    public BaseElement(By by) {
         this.by = by;
-        waiters = new Waiters(driver);
+        wait = Waiter(driver);
     }
 
-    public BaseElement(WebDriver driver, By by, String name) {
-        this.driver = driver;
+    public BaseElement(By by, String name) {
         this.by = by;
         this.name = name;
-        waiters = new Waiters(driver);
+        wait = Waiter(driver);
     }
 
-    public BaseElement(WebDriver driver, WebElement element) {
+
+    public BaseElement(WebElement element) {
         this.element = element;
-        this.driver = driver;
-        waiters = new Waiters(driver);
+        wait = Waiter(driver);
     }
 
-    public WebElement getElement() { //find element
-        element =driver.findElement(by);
+    public WebDriverWait Waiter(WebDriver driver) {
+        this.driver = driver;
+        wait = new WebDriverWait(driver, getIntProperty("timeoutElement"));
+        return null;
+    }
+
+    public WebElement getElement() {
+        element = driver.findElement(by);
+        waitForIsElementPresent();
         return element;
+    }
+
+    public void waitForIsElementPresent() {
+        waitForVisibility(by);
+        if (!element.isDisplayed()) {
+            Assert.fail("Element do not found");
+        }
+    }
+
+    public WebElement waitForClickable(By by) {
+        return wait.until(ExpectedConditions.elementToBeClickable(by));
+    }
+
+    public void waitForVisibility(By by) {
+        wait.until(ExpectedConditions.visibilityOfElementLocated(by));
+        Assert.fail("Element do not found");
     }
 
     public List<WebElement> getElements() { //for collections
         return driver.findElements(by);
     }
 
-    public void sendKeys(String sendKeys){
+    public void sendKeys(String sendKeys) {
         getElement().sendKeys(sendKeys);
     }
 
     public boolean isSelected() {
         return element.isSelected();
     }
+
     public boolean isDisplayed() {
+        waitForIsElementPresent();
         return element.isDisplayed();
     }
 
     public void click() {
-        waiters.waitForVisibility(by);
+        waitForClickable(by);
         element = getElement();
         element.click();
     }
@@ -68,7 +93,7 @@ public abstract class BaseElement {
     }
 
     public void moveAndClickByAction() {
-        waiters.waitForClickable(by);
+        waitForClickable(by);
         Actions actions = new Actions(driver);
         actions.moveToElement(getElement()).build().perform();
         actions.click(getElement()).build().perform();

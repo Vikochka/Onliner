@@ -6,16 +6,17 @@ import org.openqa.selenium.WebElement;
 
 public class Label extends BaseElement {
 
-    public Label(WebDriver driver, By by) {
-        super(driver, by);
+
+    public Label(By by) {
+        super(by);
     }
 
-    public Label(WebDriver driver, By by, String name) {
-        super(driver, by, name);
+    public Label(By by, String name) {
+        super(by, name);
     }
 
-    public Label(WebDriver driver, WebElement element) {
-        super(driver, element);
+    public Label(WebElement element) {
+        super(element);
     }
 
     public void getLabel(){

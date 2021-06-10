@@ -7,16 +7,16 @@ import org.openqa.selenium.WebElement;
 public class Button extends BaseElement {
 
 
-    public Button(WebDriver driver, By by) {
-        super(driver, by);
+    public Button(By by) {
+        super(by);
     }
 
-    public Button(WebDriver driver, By by, String name) {
-        super(driver, by, name);
+    public Button(By by, String name) {
+        super(by, name);
     }
 
-    public Button(WebDriver driver, WebElement element) {
-        super(driver, element);
+    public Button(WebElement element) {
+        super(element);
     }
 
     public void clickButton(){

@@ -17,22 +17,22 @@ public class SearchTest extends BaseTest {
         SoftAssert softAssert = new SoftAssert();
 
         MainPage mainPage = new MainPage();
-        mainPage.navigateSection("Каталог");
+        mainPage.navigatePage("Каталог");
 
-        CatalogPage catalogPage = new CatalogPage();
-        catalogPage.catalogNavigation("Электроника");
-        catalogPage.isListOpened();
-        catalogPage.listTitle("Телевидение", "Телевизоры");
-
-        TVPage tvPage = new TVPage();
-        tvPage.selectManufacturer(manufacturer);
-        tvPage.selectDiagonal(diagonalFrom, diagonalTo);
-        tvPage.selectPrice(priceTo);
-        tvPage.selectResolution(resolution);
-        tvPage.validationManufacturer(manufacturer);
-        tvPage.validationDiagonal(diagonalFrom, diagonalTo);
-        tvPage.validationResolution(resolution);
-        tvPage.validationPrice(priceTo);
+//        CatalogPage catalogPage = new CatalogPage();
+//        catalogPage.catalogNavigation("Электроника");
+//        catalogPage.isListOpened();
+//        catalogPage.listTitle("Телевидение", "Телевизоры");
+//
+//        TVPage tvPage = new TVPage();
+//        tvPage.selectManufacturer(manufacturer);
+//        tvPage.selectDiagonal(diagonalFrom, diagonalTo);
+//        tvPage.selectPrice(priceTo);
+//        tvPage.selectResolution(resolution);
+//        tvPage.validationManufacturer(manufacturer);
+//        tvPage.validationDiagonal(diagonalFrom, diagonalTo);
+//        tvPage.validationResolution(resolution);
+//        tvPage.validationPrice(priceTo);
 
         softAssert.assertAll();
     }

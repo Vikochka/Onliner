@@ -7,16 +7,16 @@ import org.openqa.selenium.WebElement;
 public class Checkbox extends BaseElement {
 
 
-    public Checkbox(WebDriver driver, By by) {
-        super(driver, by);
+    public Checkbox(By by) {
+        super(by);
     }
 
-    public Checkbox(WebDriver driver, By by, String name) {
-        super(driver, by, name);
+    public Checkbox(By by, String name) {
+        super(by, name);
     }
 
-    public Checkbox(WebDriver driver, WebElement element) {
-        super(driver, element);
+    public Checkbox(WebElement element) {
+        super(element);
     }
 
     public void selectCheckbox() {

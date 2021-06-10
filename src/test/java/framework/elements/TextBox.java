@@ -5,16 +5,17 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
 public class TextBox extends BaseElement {
-    public TextBox(WebDriver driver, By by) {
-        super(driver, by);
+
+    public TextBox(By by) {
+        super(by);
     }
 
-    public TextBox(WebDriver driver, By by, String name) {
-        super(driver, by, name);
+    public TextBox(By by, String name) {
+        super(by, name);
     }
 
-    public TextBox(WebDriver driver, WebElement element) {
-        super(driver, element);
+    public TextBox(WebElement element) {
+        super(element);
     }
 
     public void textBox(String sendKeys){
