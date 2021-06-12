@@ -1,11 +1,12 @@
 package framework.elements;
 
+import framework.DriverFactory;
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
 public abstract class TextBox extends BaseElement {
-
 
     public TextBox(By by) {
         super(by);
@@ -15,9 +16,17 @@ public abstract class TextBox extends BaseElement {
         super(by, name);
     }
 
-
-
     public void textBox(String sendKeys){
         sendKeys(sendKeys);
+    }
+    public void setText(final String value) {
+        waitForIsElementPresent();
+        element.clear();
+        textBox(value);
+    }
+
+    public String getValue() {
+        waitForIsElementPresent();
+        return element.getAttribute("value");
     }
 }
