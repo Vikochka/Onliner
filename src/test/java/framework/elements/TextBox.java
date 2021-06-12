@@ -4,7 +4,8 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
-public class TextBox extends BaseElement {
+public abstract class TextBox extends BaseElement {
+
 
     public TextBox(By by) {
         super(by);
@@ -14,9 +15,7 @@ public class TextBox extends BaseElement {
         super(by, name);
     }
 
-    public TextBox(WebElement element) {
-        super(element);
-    }
+
 
     public void textBox(String sendKeys){
         sendKeys(sendKeys);

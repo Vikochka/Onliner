@@ -1,8 +1,6 @@
 package framework.elements;
 
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
 
 public class Label extends BaseElement {
 
@@ -15,12 +13,11 @@ public class Label extends BaseElement {
         super(by, name);
     }
 
-    public Label(WebElement element) {
-        super(element);
+    protected Label(String stringLocator, String nameOfElement) {
+        super(stringLocator, nameOfElement);
     }
 
-    public void getLabel(){
-        getElement();
-        click();
+    public void getElementType() {
+        getElementType();
     }
 }

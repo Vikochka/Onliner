@@ -4,7 +4,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
-public class Button extends BaseElement {
+public abstract class Button extends BaseElement {
 
 
     public Button(By by) {
@@ -15,9 +15,7 @@ public class Button extends BaseElement {
         super(by, name);
     }
 
-    public Button(WebElement element) {
-        super(element);
-    }
+
 
     public void clickButton(){
         click();

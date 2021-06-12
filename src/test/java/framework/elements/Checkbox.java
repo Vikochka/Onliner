@@ -1,11 +1,8 @@
 package framework.elements;
 
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
 
-public class Checkbox extends BaseElement {
-
+public abstract class Checkbox extends BaseElement{
 
     public Checkbox(By by) {
         super(by);
@@ -15,8 +12,8 @@ public class Checkbox extends BaseElement {
         super(by, name);
     }
 
-    public Checkbox(WebElement element) {
-        super(element);
+    protected Checkbox(String stringLocator, String nameOfElement) {
+        super(stringLocator, nameOfElement);
     }
 
     public void selectCheckbox() {

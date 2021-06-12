@@ -1,52 +1,69 @@
 package framework.elements;
 
+import framework.DriverFactory;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.remote.RemoteWebElement;
+import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import static framework.PropertyReader.getIntProperty;
 
 public abstract class BaseElement {
-    protected WebElement element;
+    protected RemoteWebElement element;
     protected WebDriver driver;
     private By by;
     private String name;
     private WebDriverWait wait;
+    private static final String LINK = "link=";
+
+    private static final String ID = "id=";
+    private static final String CSS = "css=";
+
+    private static final int TIMEOUT_WAIT_0 = 0;
+
+    public RemoteWebElement getElement() {
+        waitForIsElementPresent();
+        return element;
+    }
 
     public BaseElement(By by) {
         this.by = by;
-        wait = Waiter(driver);
     }
 
     public BaseElement(By by, String name) {
         this.by = by;
         this.name = name;
-        wait = Waiter(driver);
     }
 
 
-    public BaseElement(WebElement element) {
-        this.element = element;
-        wait = Waiter(driver);
+    protected BaseElement(String stringLocator, final String nameOfElement) {
+        String clearLoc = null;
+        if (stringLocator.contains(CSS)) {
+            clearLoc = stringLocator.replaceFirst(CSS, "");
+            by = By.cssSelector(clearLoc);
+            name = nameOfElement;
+        } else if (stringLocator.contains(ID)) {
+            clearLoc = stringLocator.replaceFirst(ID, "");
+            by = By.id(clearLoc);
+            name = nameOfElement;
+        } else if (stringLocator.contains(LINK)) {
+            clearLoc = stringLocator.replaceFirst(LINK, "");
+            by = By.linkText(clearLoc);
+            name = nameOfElement;
+        }  else {
+            Assert.fail("UNKNOWN LOCATOR's TYPE. Change to 'By'");
+        }
     }
 
-    public WebDriverWait Waiter(WebDriver driver) {
-        this.driver = driver;
-        wait = new WebDriverWait(driver, getIntProperty("timeoutElement"));
-        return null;
-    }
-
-    public WebElement getElement() {
-        element = driver.findElement(by);
-        waitForIsElementPresent();
-        return element;
-    }
+    protected abstract void getElementType();
 
     public void waitForIsElementPresent() {
         waitForVisibility(by);
@@ -64,10 +81,6 @@ public abstract class BaseElement {
         Assert.fail("Element do not found");
     }
 
-    public List<WebElement> getElements() { //for collections
-        return driver.findElements(by);
-    }
-
     public void sendKeys(String sendKeys) {
         getElement().sendKeys(sendKeys);
     }
@@ -83,12 +96,11 @@ public abstract class BaseElement {
 
     public void click() {
         waitForClickable(by);
-        element = getElement();
         element.click();
     }
 
     public String getText() {
-        element = getElement();
+        waitForIsElementPresent();
         return element.getText();
     }
 
@@ -102,5 +114,42 @@ public abstract class BaseElement {
     public void moveToElement() {
         Actions actions = new Actions(driver);
         actions.moveToElement(element).build().perform();
+    }
+
+    public boolean isPresent() {
+        return isPresent(TIMEOUT_WAIT_0);
+    }
+
+    public boolean isPresent(int timeout) {
+        WebDriverWait wait = new WebDriverWait(DriverFactory.getDriver(), timeout);
+        DriverFactory.getDriver().manage().timeouts().implicitlyWait(TIMEOUT_WAIT_0, TimeUnit.SECONDS);
+        try {
+            wait.until((ExpectedCondition<Boolean>) new ExpectedCondition<Boolean>() {
+                public Boolean apply(final WebDriver driver) {
+                    try {
+                        List<WebElement> list = driver.findElements(by);
+                        for (WebElement el : list) {
+                            if (el instanceof RemoteWebElement && el.isDisplayed()) {
+                                element = (RemoteWebElement) el;
+                                return element.isDisplayed();
+                            }
+                        }
+                        element = (RemoteWebElement) driver.findElement(by);
+                    } catch (Exception e) {
+                        return false;
+                    }
+                    return element.isDisplayed();
+                }
+            });
+        } catch (Exception e) {
+            return false;
+        }
+        try {
+            DriverFactory.getDriver().manage().timeouts().implicitlyWait(getIntProperty("timeoutElement"), TimeUnit.SECONDS);
+            return element.isDisplayed();
+        } catch (Exception e) {
+            Assert.fail("Element does not appeared");
+        }
+        return false;
     }
 }

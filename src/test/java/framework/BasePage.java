@@ -2,10 +2,7 @@ package framework;
 
 import framework.elements.Label;
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
 import org.testng.Assert;
-
-import java.util.Date;
 
 
 public class BasePage {
@@ -27,7 +24,7 @@ public class BasePage {
         try {
             elem.waitForIsElementPresent();
         } catch (Throwable e) {
-            Assert.fail(title + "does not open");
+            new AssertionError(title + " does not open");
         }
     }
 }
