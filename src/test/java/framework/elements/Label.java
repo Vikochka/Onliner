@@ -13,10 +13,6 @@ public class Label extends BaseElement {
         super(by, name);
     }
 
-    protected Label(String stringLocator, String nameOfElement) {
-        super(stringLocator, nameOfElement);
-    }
-
     public void getElementType() {
         getElementType();
     }

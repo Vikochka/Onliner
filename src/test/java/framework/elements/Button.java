@@ -15,9 +15,6 @@ public abstract class Button extends BaseElement {
         super(by, name);
     }
 
-    protected Button(String stringLocator, String nameOfElement) {
-        super(stringLocator, nameOfElement);
-    }
 
     public void clickButton(){
         click();

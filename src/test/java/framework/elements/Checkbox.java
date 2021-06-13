@@ -12,9 +12,6 @@ public abstract class Checkbox extends BaseElement{
         super(by, name);
     }
 
-    protected Checkbox(String stringLocator, String nameOfElement) {
-        super(stringLocator, nameOfElement);
-    }
 
     public void selectCheckbox() {
         getElement();

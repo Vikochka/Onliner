@@ -43,26 +43,6 @@ public abstract class BaseElement {
         this.name = name;
     }
 
-
-    protected BaseElement(String stringLocator, final String nameOfElement) {
-        String clearLoc = null;
-        if (stringLocator.contains(CSS)) {
-            clearLoc = stringLocator.replaceFirst(CSS, "");
-            by = By.cssSelector(clearLoc);
-            name = nameOfElement;
-        } else if (stringLocator.contains(ID)) {
-            clearLoc = stringLocator.replaceFirst(ID, "");
-            by = By.id(clearLoc);
-            name = nameOfElement;
-        } else if (stringLocator.contains(LINK)) {
-            clearLoc = stringLocator.replaceFirst(LINK, "");
-            by = By.linkText(clearLoc);
-            name = nameOfElement;
-        }  else {
-            Assert.fail("UNKNOWN LOCATOR's TYPE. Change to 'By'");
-        }
-    }
-
     protected abstract void getElementType();
 
     public void waitForIsElementPresent() {
@@ -124,7 +104,7 @@ public abstract class BaseElement {
         WebDriverWait wait = new WebDriverWait(DriverFactory.getDriver(), timeout);
         DriverFactory.getDriver().manage().timeouts().implicitlyWait(TIMEOUT_WAIT_0, TimeUnit.SECONDS);
         try {
-            wait.until((ExpectedCondition<Boolean>) new ExpectedCondition<Boolean>() {
+            wait.until((ExpectedCondition<Boolean>)  new ExpectedCondition<Boolean>() {
                 public Boolean apply(final WebDriver driver) {
                     try {
                         List<WebElement> list = driver.findElements(by);
