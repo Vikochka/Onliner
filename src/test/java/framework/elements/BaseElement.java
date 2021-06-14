@@ -22,11 +22,6 @@ public abstract class BaseElement {
     private By by;
     private String name;
     private WebDriverWait wait;
-    private static final String LINK = "link=";
-
-    private static final String ID = "id=";
-    private static final String CSS = "css=";
-
     private static final int TIMEOUT_WAIT_0 = 0;
 
     public WebElement getElement() {
