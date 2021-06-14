@@ -17,7 +17,7 @@ import java.util.concurrent.TimeUnit;
 import static framework.PropertyReader.getIntProperty;
 
 public abstract class BaseElement {
-    protected RemoteWebElement element;
+    protected WebElement element;
     protected WebDriver driver;
     private By by;
     private String name;
@@ -29,7 +29,7 @@ public abstract class BaseElement {
 
     private static final int TIMEOUT_WAIT_0 = 0;
 
-    public RemoteWebElement getElement() {
+    public WebElement getElement() {
         waitForIsElementPresent();
         return element;
     }
@@ -109,12 +109,12 @@ public abstract class BaseElement {
                     try {
                         List<WebElement> list = driver.findElements(by);
                         for (WebElement el : list) {
-                            if (el instanceof RemoteWebElement && el.isDisplayed()) {
-                                element = (RemoteWebElement) el;
+                            if (el instanceof WebElement && el.isDisplayed()) {
+                                element = (WebElement) el;
                                 return element.isDisplayed();
                             }
                         }
-                        element = (RemoteWebElement) driver.findElement(by);
+                        element = (WebElement) driver.findElement(by);
                     } catch (Exception e) {
                         return false;
                     }
