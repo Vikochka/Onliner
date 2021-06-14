@@ -27,7 +27,7 @@ public class BasePage {
         try {
             elem.waitForIsElementPresent();
         } catch (Throwable e) {
-            Assert.fail(title + "does not open");
+            new AssertionError(title + " does not open");
         }
     }
 }

@@ -1,7 +1,6 @@
 package page;
 
 import framework.BasePage;
-import framework.Waiters;
 import org.openqa.selenium.By;
 import org.testng.asserts.SoftAssert;
 
@@ -13,20 +12,24 @@ public class CatalogPage extends BasePage {
     public static final String WAIT_FOR_IS_PAGE_OPEN = "//h1[contains(@class,'schema-header__title')][contains(text(),'%s')]";
     SoftAssert softAssert;
 
-    public void catalogNavigation(String catalogNavigation) {
-        driver.findElement(By.xpath(String.format(CATALOG_NAVIGATION, catalogNavigation))).click();
+    public CatalogPage(By locator, String pageTitle) {
+        super(locator, pageTitle);
     }
 
-    public void listTitle(String listTitle, String listDropdown) {
-        driver.findElement(By.xpath(String.format(LIST_TITLE_XPATH, listTitle))).click();
-        driver.findElement(By.xpath(String.format(LIST_DROPDOWN_XPATH, listDropdown))).click();
-    }
-
-
-    public void isListOpened() {
-        Waiters.waitForVisibility(CATALOG_LIST_XPATH);
-        softAssert.assertTrue(true);
-    }
-
+//    public void catalogNavigation(String catalogNavigation) {
+//        driver.findElement(By.xpath(String.format(CATALOG_NAVIGATION, catalogNavigation))).click();
+//    }
+//
+//    public void listTitle(String listTitle, String listDropdown) {
+//        driver.findElement(By.xpath(String.format(LIST_TITLE_XPATH, listTitle))).click();
+//        driver.findElement(By.xpath(String.format(LIST_DROPDOWN_XPATH, listDropdown))).click();
+//    }
+//
+//
+//    public void isListOpened() {
+//     //   Waiters.waitForVisibility(CATALOG_LIST_XPATH);
+//        softAssert.assertTrue(true);
+//    }
+//
 
 }
