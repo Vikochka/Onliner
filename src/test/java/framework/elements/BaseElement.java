@@ -1,10 +1,13 @@
 package framework.elements;
 
+import framework.BaseTest;
+import framework.Browser;
 import framework.DriverFactory;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.remote.RemoteWebElement;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -15,13 +18,14 @@ import java.util.concurrent.TimeUnit;
 
 import static framework.PropertyReader.getIntProperty;
 
-public abstract class BaseElement {
+public abstract class BaseElement extends BaseTest {
     protected WebElement element;
     protected WebDriver driver;
     private By by;
     private String name;
     private WebDriverWait wait;
     private static final int TIMEOUT_WAIT_0 = 0;
+
 
     public WebElement getElement() {
         waitForIsElementPresent();
@@ -37,78 +41,42 @@ public abstract class BaseElement {
         this.name = name;
     }
 
-    protected abstract void getElementType();
+    protected abstract String getElementType();
 
     public void waitForIsElementPresent() {
-        waitForVisibility(by);
+        isPresent();
         if (!element.isDisplayed()) {
             Assert.fail("Element do not found");
         }
     }
 
     public WebElement waitForClickable(By by) {
-        return wait.until(ExpectedConditions.elementToBeClickable(by));
+        isPresent();
+        wait.until(ExpectedConditions.elementToBeClickable(by));
+        return element;
     }
 
-    public void waitForVisibility(By by) {
-        wait.until(ExpectedConditions.visibilityOfElementLocated(by));
-        Assert.fail("Element do not found");
-    }
-
-    public void sendKeys(String sendKeys) {
-        getElement().sendKeys(sendKeys);
-    }
-
-    public boolean isSelected() {
-        return element.isSelected();
-    }
-
-    public boolean isDisplayed() {
-        waitForIsElementPresent();
-        return element.isDisplayed();
-    }
-
-    public void click() {
-        waitForClickable(by);
-        element.click();
-    }
-
-    public String getText() {
-        waitForIsElementPresent();
-        return element.getText();
-    }
-
-    public void moveAndClickByAction() {
-        waitForClickable(by);
-        Actions actions = new Actions(driver);
-        actions.moveToElement(getElement()).build().perform();
-        actions.click(getElement()).build().perform();
-    }
-
-    public void moveToElement() {
-        Actions actions = new Actions(driver);
-        actions.moveToElement(element).build().perform();
-    }
 
     public boolean isPresent() {
+
         return isPresent(TIMEOUT_WAIT_0);
     }
 
     public boolean isPresent(int timeout) {
-        WebDriverWait wait = new WebDriverWait(DriverFactory.getDriver(), timeout);
-        DriverFactory.getDriver().manage().timeouts().implicitlyWait(TIMEOUT_WAIT_0, TimeUnit.SECONDS);
+        WebDriverWait wait = new WebDriverWait(Browser.getInstance().getDriver(), timeout);
+        browser.getDriver().manage().timeouts().implicitlyWait(Integer.valueOf(browser.getTimeoutForCondition()), TimeUnit.SECONDS);
         try {
-            wait.until((ExpectedCondition<Boolean>)  new ExpectedCondition<Boolean>() {
+            wait.until((ExpectedCondition<Boolean>) new ExpectedCondition<Boolean>() {
                 public Boolean apply(final WebDriver driver) {
                     try {
                         List<WebElement> list = driver.findElements(by);
                         for (WebElement el : list) {
-                            if (el instanceof WebElement && el.isDisplayed()) {
-                                element = (WebElement) el;
+                            if (el instanceof RemoteWebElement && el.isDisplayed()) {
+                                element = (RemoteWebElement) el;
                                 return element.isDisplayed();
                             }
                         }
-                        element = (WebElement) driver.findElement(by);
+                        element = (RemoteWebElement) driver.findElement(by);
                     } catch (Exception e) {
                         return false;
                     }
@@ -119,11 +87,46 @@ public abstract class BaseElement {
             return false;
         }
         try {
-            DriverFactory.getDriver().manage().timeouts().implicitlyWait(getIntProperty("timeoutElement"), TimeUnit.SECONDS);
+            browser.getDriver().manage().timeouts().implicitlyWait(Integer.valueOf(browser.getTimeoutForCondition()), TimeUnit.SECONDS);
             return element.isDisplayed();
         } catch (Exception e) {
-            Assert.fail("Element does not appeared");
+            Assert.fail("Element does not found");
         }
         return false;
     }
+
+
+    public void sendKeys(String sendKeys) {
+        getElement().sendKeys(sendKeys);
+    }
+
+    public boolean isSelected() {
+        waitForIsElementPresent();
+        return element.isSelected();
+    }
+
+    public boolean isDisplayed() {
+        waitForIsElementPresent();
+        return element.isDisplayed();
+    }
+
+    public void click() {
+        waitForIsElementPresent();
+        element.click();
+    }
+
+    public String getText() {
+        waitForIsElementPresent();
+        return element.getText();
+    }
+
+    public void moveAndClickByAction() {
+        waitForIsElementPresent();
+      //  wait.until(ExpectedConditions.elementToBeClickable(element));
+        Actions actions = new Actions(driver);
+        actions.moveToElement(element).perform();
+        actions.click().perform();
+    }
+
+
 }

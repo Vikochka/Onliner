@@ -13,13 +13,8 @@ public class Checkbox extends BaseElement {
         super(by, name);
     }
 
-    public void getElementType() {
-        getElementType();
+    public String getElementType() {
+       return getElementType();
     }
 
-    public void selectCheckbox() {
-        getElement();
-        moveAndClickByAction();
-        isSelected();
-    }
 }

@@ -1,6 +1,8 @@
 package framework.elements;
 
+import framework.DriverFactory;
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 
 public class TextBox extends BaseElement {
 
@@ -12,11 +14,12 @@ public class TextBox extends BaseElement {
         super(by, name);
     }
 
-    public void getElementType() {
-        getElementType();
+    public String getElementType() {
+        return getElementType();
     }
 
-    public void textBox(String sendKeys){
-        sendKeys(sendKeys);
+    public void sendKeys(final String value) {
+        waitForIsElementPresent();
+        element.sendKeys(value);
     }
 }

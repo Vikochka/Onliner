@@ -5,8 +5,8 @@ import org.openqa.selenium.By;
 import org.testng.Assert;
 
 
-public class BasePage {
-    private String title;
+public class BasePage extends BaseTest {
+    protected String title;
     protected By titleLocator;
 
     public BasePage(final By locator, final String pageTitle) {
