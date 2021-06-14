@@ -3,6 +3,10 @@ package framework;
 import framework.elements.Label;
 import org.openqa.selenium.By;
 import org.testng.Assert;
+import org.testng.AssertJUnit;
+import org.testng.asserts.SoftAssert;
+
+import static org.testng.Assert.assertTrue;
 
 
 public class BasePage {
@@ -24,7 +28,8 @@ public class BasePage {
         try {
             elem.waitForIsElementPresent();
         } catch (Throwable e) {
-            new AssertionError(title + " does not open");
+            Assert.assertTrue(true, title + " does not open");
+
         }
     }
 }
