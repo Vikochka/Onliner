@@ -29,7 +29,6 @@ public class TVPage extends BasePage {
         super(locator, pageTitle);
     }
 
-
 //    public void selectManufacturer(String manufacturer) {
 //        WebElement element = driver.findElement(By.xpath(String.format(CHECKBOX_XPATH, manufacturer)));
 //        WebDriverWait wait = new WebDriverWait(driver,getIntProperty("timeoutElement"));

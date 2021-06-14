@@ -27,9 +27,9 @@ public class CatalogPage extends BasePage {
 //
 //
 //    public void isListOpened() {
-//     //   Waiters.waitForVisibility(CATALOG_LIST_XPATH);
+//        Waiters.waitForVisibility(CATALOG_LIST_XPATH);
 //        softAssert.assertTrue(true);
 //    }
-//
+
 
 }
