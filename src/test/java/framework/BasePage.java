@@ -3,10 +3,6 @@ package framework;
 import framework.elements.Label;
 import org.openqa.selenium.By;
 import org.testng.Assert;
-import org.testng.AssertJUnit;
-import org.testng.asserts.SoftAssert;
-
-import static org.testng.Assert.assertTrue;
 
 
 public class BasePage {
