@@ -1,8 +1,6 @@
 package framework.elements;
 
-import framework.DriverFactory;
 import org.openqa.selenium.By;
-import org.openqa.selenium.JavascriptExecutor;
 
 public class TextBox extends BaseElement {
 
@@ -18,8 +16,23 @@ public class TextBox extends BaseElement {
         return getElementType();
     }
 
-    public void sendKeys(final String value) {
+    public void type(final String value) {
         waitForIsElementPresent();
         element.sendKeys(value);
+    }
+
+    public String getText() {
+        waitForIsElementPresent();
+        element.getText();
+        return null;
+    }
+
+    public String[] split(String value) {
+        return new String[0];
+    }
+
+
+    public int size() {
+        return 0;
     }
 }

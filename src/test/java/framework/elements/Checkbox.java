@@ -17,4 +17,13 @@ public class Checkbox extends BaseElement {
        return getElementType();
     }
 
+
+    public String[] split(String value) {
+        return new String[0];
+    }
+
+    public int size() {
+        return 0;
+    }
+
 }

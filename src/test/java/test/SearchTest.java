@@ -10,7 +10,6 @@ import page.TVPage;
 
 public class SearchTest extends BaseTest {
 
-
     @Parameters({"manufacturer", "priceTo", "diagonalFrom", "diagonalTo", "resolution"})
     @Test
     public void searchTVTest(String manufacturer, String priceTo, String diagonalFrom, String diagonalTo, String resolution) {
@@ -24,15 +23,15 @@ public class SearchTest extends BaseTest {
         catalogPage.isCatalogList();
         catalogPage.listTitle("Телевидение", "Телевизоры");
 
-       TVPage tvPage = new TVPage("Телевизоры");
+        TVPage tvPage = new TVPage("Телевизоры");
         tvPage.selectManufacturer(manufacturer);
         tvPage.selectDiagonal(diagonalFrom, diagonalTo);
         tvPage.selectPrice(priceTo);
         tvPage.selectResolution(resolution);
-       // tvPage.validationManufacturer(manufacturer);
-     //   tvPage.validationDiagonal(diagonalFrom, diagonalTo);
-    //    tvPage.validationResolution(resolution);
-    //    tvPage.validationPrice(priceTo);
+        tvPage.validationManufacturer(manufacturer);
+        tvPage.validationDiagonal(diagonalFrom, diagonalTo);
+        tvPage.validationResolution(resolution);
+        tvPage.validationPrice(priceTo);
 
         softAssert.assertAll();
     }

@@ -14,10 +14,18 @@ public class Button extends BaseElement {
     }
 
     public String getElementType() {
-       return getElementType();
+        return getElementType();
     }
 
-    public void clickButton(){
+    public String[] split(String value) {
+        return new String[0];
+    }
+
+    public int size() {
+        return 0;
+    }
+
+    public void clickButton() {
         click();
     }
 }

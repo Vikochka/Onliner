@@ -2,7 +2,6 @@ package framework.elements;
 
 import framework.BaseTest;
 import framework.Browser;
-import framework.DriverFactory;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -15,8 +14,6 @@ import org.testng.Assert;
 
 import java.util.List;
 import java.util.concurrent.TimeUnit;
-
-import static framework.PropertyReader.getIntProperty;
 
 public abstract class BaseElement extends BaseTest {
     protected WebElement element;
@@ -58,7 +55,6 @@ public abstract class BaseElement extends BaseTest {
 
 
     public boolean isPresent() {
-
         return isPresent(TIMEOUT_WAIT_0);
     }
 
@@ -122,11 +118,14 @@ public abstract class BaseElement extends BaseTest {
 
     public void moveAndClickByAction() {
         waitForIsElementPresent();
-      //  wait.until(ExpectedConditions.elementToBeClickable(element));
-        Actions actions = new Actions(driver);
+        Actions actions = new Actions(Browser.getInstance().getDriver());
         actions.moveToElement(element).perform();
         actions.click().perform();
     }
 
 
+    public abstract String[] split(String velue);
+
+
+    public abstract int size();
 }
