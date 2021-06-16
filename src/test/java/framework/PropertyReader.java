@@ -5,55 +5,53 @@ import java.io.InputStream;
 import java.util.Properties;
 
 public class PropertyReader {
-    private static String propertiesPath = "/config.properties";
-    private static volatile Properties properties;
-    private static InputStream inputStream;
+
+    private static Properties properties = new Properties();
 
     public PropertyReader() {
-    }
-
-    private static String getCorrectPath() {
-        if (propertiesPath.charAt(0) != '/')
-            propertiesPath = "/" + propertiesPath;
-        return propertiesPath;
-    }
-
-    public static Properties readProperties() {
         properties = new Properties();
-        try {
-            inputStream = PropertyReader.class.getResourceAsStream(getCorrectPath());
-            if (inputStream != null)
-                properties.load(inputStream);
-        } catch (Exception ex) {
-            if (inputStream != null) {
-                try {
-                    inputStream.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+    }
+
+    public PropertyReader(final String resourceName) {
+        properties = appendFromResource(properties, resourceName);
+    }
+
+
+    public PropertyReader(final String defaultResourceName, final String resourceName) {
+        this(defaultResourceName);
+        properties = appendFromResource(new Properties(properties), resourceName);
+    }
+
+    private Properties appendFromResource(final Properties objProperties, final String resourceName) {
+        InputStream inStream = this.getClass().getClassLoader().getResourceAsStream(resourceName);
+
+        if (inStream != null) {
+            try {
+                objProperties.load(inStream);
+                inStream.close();
+            } catch (IOException e) {
+                e.printStackTrace();
             }
+        } else {
+            System.err.println(String.format("Resource \"%1$s\" could not be found", resourceName));
         }
-        if (properties.getProperty("config_file") != null) {
-            Properties additionalProperties = getProperties(properties.getProperty("config_file"));
-            properties.putAll(additionalProperties);
-        }
-        return properties;
+        return objProperties;
     }
 
-    private static Properties loadProperties() {
-        return properties != null ? properties : readProperties();
+    public static String getProperty(final String key) {
+        return properties.getProperty(key);
     }
 
-    public static Properties getProperties(String path) {
-        propertiesPath = path;
-        return readProperties();
+    public String getProperty(final String key, final String defaultValue) {
+        return properties.getProperty(key, defaultValue);
     }
 
-    public static String getProperty(String propertyName) {
-        return loadProperties().getProperty(propertyName);
+
+    public void setProperty(final String key, final String value) {
+        properties.setProperty(key, value);
     }
 
-    public static int getIntProperty(String intPropertyName) {
-        return Integer.parseInt(loadProperties().getProperty(String.valueOf(intPropertyName)));
+    public static int getIntProperty(final String key) {
+        return Integer.parseInt(getProperty(String.valueOf(key)));
     }
 }

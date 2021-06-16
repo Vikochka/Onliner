@@ -1,30 +1,23 @@
 package framework;
 
-import com.google.common.base.Strings;
 import framework.elements.Label;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 
-import javax.naming.NamingException;
 import java.util.concurrent.TimeUnit;
 
-import static framework.PropertyReader.getIntProperty;
 
 public class Browser {
 
-    private static final long IMPLICITLY_WAIT = getIntProperty("timeout");
-    private static final int DEFAULT_CONDITION_TIMEOUT = getIntProperty("timeoutElement");
-    private static final int DEFAULT_PAGE_LOAD_TIMEOUT = getIntProperty("timeout");;
+    private static final long IMPLICITLY_WAIT = 10;
+    private static final String DEFAULT_CONDITION_TIMEOUT = "timeoutElement";
+    private static final String DEFAULT_PAGE_LOAD_TIMEOUT = "timeout";
 
-    static final String PROPERTIES_FILE = "selenium.properties";
-    private static final String BROWSER_BY_DEFAULT = "firefox";
-    private static final String BROWSER_PROP = "browser";
-
+    static final String PROPERTIES_FILE = "config.properties";
 
     // browsers
     private static Browser instance;
@@ -35,11 +28,9 @@ public class Browser {
     private static String timeoutForPageLoad;
     private static String timeoutForCondition;
 
-    public static Browser currentBrowser;
 
-//    private Browser() {
-//        Logger.getInstance().info(String.format(getLoc("loc.browser.ready"), currentBrowser.toString()));
-//    }
+    public static PropertyReader props;
+
 
     public boolean isBrowserAlive() {
         return instance != null;
@@ -47,6 +38,7 @@ public class Browser {
 
     public static Browser getInstance() {
         if (instance == null) {
+            initProperties();
             try {
                 driver = DriverFactory.getDriver();
                 driver.manage().timeouts().implicitlyWait(IMPLICITLY_WAIT, TimeUnit.SECONDS);
@@ -56,6 +48,12 @@ public class Browser {
             instance = new Browser();
         }
         return instance;
+    }
+
+    private static void initProperties() {
+        props = new PropertyReader(PROPERTIES_FILE);
+        timeoutForPageLoad = props.getProperty(DEFAULT_PAGE_LOAD_TIMEOUT);
+        timeoutForCondition = props.getProperty(DEFAULT_CONDITION_TIMEOUT);
     }
 
     public void exit() {
@@ -69,11 +67,11 @@ public class Browser {
     }
 
     public String getTimeoutForCondition() {
-        return String.valueOf(DEFAULT_CONDITION_TIMEOUT);
+        return timeoutForCondition;
     }
 
     public String getTimeoutForPageLoad() {
-        return String.valueOf(DEFAULT_PAGE_LOAD_TIMEOUT);
+        return  timeoutForPageLoad;
     }
 
 

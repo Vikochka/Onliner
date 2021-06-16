@@ -5,14 +5,13 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 
-import static framework.PropertyReader.getProperty;
+
 
 public class DriverFactory {
 
     public static WebDriver getDriver() {
-
         WebDriver driver = null;
-        String browser = getProperty("browser");
+        String browser = PropertyReader.getProperty("browser");
 
         switch (browser) {
             case "chrome":
